@@ -1,2 +1,7 @@
 flask
 llama-index
+pyvis
+networkx
+matplotlib
+pinecone-client
+transformers

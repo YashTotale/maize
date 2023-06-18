@@ -11,14 +11,23 @@ from llama_index import (
     ServiceContext,
     ResponseSynthesizer,
     EmptyIndex,
+    KnowledgeGraphIndex,
 )
 
 
-from flask import request
+from flask import request, render_template, send_file
 from langchain.llms import OpenAI
+
 from llama_index.retrievers import VectorIndexRetriever
 from llama_index.query_engine import RetrieverQueryEngine
 from llama_index.indices.postprocessor import SimilarityPostprocessor
+from llama_index.graph_stores import SimpleGraphStore
+
+from pyvis.network import Network
+
+import networkx as nx
+from io import BytesIO
+import matplotlib.pyplot as plt
 
 from flask import Flask
 
@@ -34,9 +43,47 @@ os.environ["OPENAI_API_KEY"] = "sk-AAArUVBfTjxGnMeyGuh1T3BlbkFJRJ2LWJVIjgPWzHIxA
 
 granary_dir = "./granary"  # directory to store files
 storage_dir = "./storage"
+html_file = "./example.html"
 
 storage_context = StorageContext.from_defaults(persist_dir=storage_dir)
 index: VectorStoreIndex = None  # type: ignore
+kindex: KnowledgeGraphIndex = None
+
+
+@app.route("/api/sample-graph", methods=["GET"])
+def random():
+    return render_template(html_file)
+
+
+@app.route("/api/knowledge", methods=["GET"])
+def init_knowledge_index():
+    global kindex
+    graph_store = SimpleGraphStore()
+    graph_storage_context = StorageContext.from_defaults(graph_store=graph_store)
+    documents = SimpleDirectoryReader(granary_dir).load_data()
+    llm_predictor = LLMPredictor(llm=OpenAI(model_name="gpt-4"))
+    graph_service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
+    parser = node_parser.SimpleNodeParser()
+    nodes = parser.get_nodes_from_documents(documents)
+
+    kindex = KnowledgeGraphIndex(
+        nodes=nodes,
+        max_triplets_per_chunk=10,
+        storage_context=graph_storage_context,
+        service_context=graph_service_context,
+    )
+
+    # kindex = KnowledgeGraphIndex.build??(
+    #     documents,
+    #     max_triplets_per_chunk=10,
+    #     storage_context=graph_storage_context,
+    #     service_context=graph_service_context,
+    # )
+
+    graph = kindex.get_networkx_graph()
+    net = Network(notebook=False, cdn_resources="in_line", directed=True)
+    net.from_nx(graph)
+    return net.generate_html(), 200
 
 
 @app.before_request
@@ -79,6 +126,28 @@ def home2():
     return "nice"
 
 
+@app.route("/api/granary", methods=["GET"])
+def granary():
+    global index, storage_context
+
+    kernels = [
+        os.path.join(granary_dir, f)
+        for f in os.listdir(granary_dir)
+        if os.path.isfile(os.path.join(granary_dir, f))
+    ]
+    kernel_info = []
+    for kernel in kernels:
+        saved_file = open(kernel, "r")
+        file_content = saved_file.read()
+        pass
+
+    return {
+        "success": True,
+        "message": "Success fetching granary!",
+        "payload": {"kernel_info": kernel_info},
+    }, 200
+
+
 @app.route("/api/createKernel", methods=["POST"])
 def createKernel():
     global index, storage_context
@@ -96,8 +165,13 @@ def createKernel():
     index.insert(doc)
     index.storage_context.persist(persist_dir=storage_dir)
 
-    response = {"kernel_id": doc.get_doc_id()}
-    return response, 200
+    return {
+        "success": True,
+        "message": "Success creating kernel!",
+        "payload": {
+            "kernel_id": doc.doc_id,
+        },
+    }, 200
 
 
 @app.route("/api/query", methods=["GET"])
@@ -109,7 +183,7 @@ def query_index():
 
     query_text = request.args.get("text", None)
     if query_text is None:
-        return "No text found, please include a ?text=blah parameter in the URL", 400
+        return "No text found, please include a ?text=SIUUU parameter in the URL", 400
     # query_engine = index.as_query_engine()
 
     # response = query_engine.query(query_text)
@@ -136,9 +210,17 @@ def query_index():
     # query
     response = query_engine.query(query_text)
 
-    return {"response": response.response, "response_nodes": response.source_nodes}, 200  # type: ignore
+    print("SOURCES: " + response.get_formatted_sources())
+
+    return {
+        "success": True,
+        "message": "Success querying!",
+        "payload": {
+            "response": response.response,  # type: ignore
+            "response_nodes": response.source_nodes,
+        },
+    }, 200
 
 
 if __name__ == "__main__":
-    # index_init()
     app.run(host="0.0.0.0", port=PORT)
