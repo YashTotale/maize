@@ -6,7 +6,13 @@ from llama_index import (
     VectorStoreIndex,
     Document,
     StorageContext,
+    ResponseSynthesizer,
 )
+
+from llama_index.retrievers import VectorIndexRetriever
+from llama_index.query_engine import RetrieverQueryEngine
+from llama_index.indices.postprocessor import SimilarityPostprocessor
+
 from llama_index.vector_stores import PineconeVectorStore
 import json
 
@@ -77,7 +83,7 @@ def query_index():
     query_text = request.args.get("query", None)
 
     # If no query, then get all documents.
-    if query_text is None:
+    if query_text is None or query_text == "":
         # Get files database
         files_db_reader = open(os.environ["FILES_DB"], "r")
         files_db = json.load(files_db_reader)
@@ -97,14 +103,39 @@ def query_index():
         # Define empty response
         relevant_docs = {}
 
+        # GET THE QUERY RESPONSE
+
+        # configure retriever
+        retriever = VectorIndexRetriever(
+            index=index,
+            similarity_top_k=4,
+        )
+
+        # configure response synthesizer
+        response_synthesizer = ResponseSynthesizer.from_args(
+            node_postprocessors=[
+                SimilarityPostprocessor(
+                    similarity_cutoff=float(os.environ["SEARCH_THRESHOLD"])
+                )
+            ]
+        )
+
+        # assemble query engine
+        query_engine = RetrieverQueryEngine(
+            retriever=retriever,
+            response_synthesizer=response_synthesizer,
+        )
+
         # If query text given, provide the query response
-        query_res = index.as_query_engine().query(query_text)
+        query_res = query_engine.query(query_text)
+
+        # store only the text of the query response
+        text_res = query_res.response  # type: ignore
 
         # Go through each document that the response used as a source
         nodes = query_res.source_nodes
 
         for obj in nodes:
-            print(obj)
             node = obj.node
             # If node is relevant enough...
             if obj.score >= float(os.environ["SEARCH_THRESHOLD"]):  # type: ignore
@@ -112,17 +143,20 @@ def query_index():
                 text = get_granary_text(node.ref_doc_id)
 
                 # Get filename corresponding to doc_id
-                filename = query_files_db(node.ref_doc_id)
+                filename = query_files_db(node.ref_doc_id)["filename"]
 
                 # Add object to relevantDocs object with its filename and full text
-                relevant_docs[node.doc_id] = {"filename": filename, "text": text}
+                relevant_docs[node.ref_doc_id] = {
+                    "filename": filename,
+                    "text": text,
+                }
 
         return {
             "success": True,
             "message": "Success querying!",
             "payload": {
                 "relevantDocs": relevant_docs,  # type: ignore
-                "queryResponse": query_res,
+                "textResponse": text_res,
             },
         }, 200
 

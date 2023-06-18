@@ -6,6 +6,7 @@ import axios from "axios";
 import Kernel from "./Kernel";
 import KernelLoading from "./Kernel/Loading";
 import { createServerAPIRoute } from "@/lib/urls";
+import Section from "./Section";
 
 interface Doc {
   filename: string;
@@ -14,6 +15,7 @@ interface Doc {
 
 interface GranaryData {
   relevantDocs: Record<string, Doc>;
+  textResponse: string;
 }
 
 const fetchGranaryData = async (query: string): Promise<GranaryData> => {
@@ -40,6 +42,48 @@ const Results: FC<ResultsProps> = ({ query }) => {
       });
   }, [query]);
 
+  const summary = useMemo(() => {
+    if (!data) {
+      return (
+        <div role="status" className="space-y-2.5 animate-pulse w-full">
+          <div className="flex items-center w-full space-x-2">
+            <div className="h-2.5 bg-gray-100 rounded-full w-[25%]"></div>
+            <div className="h-2.5 bg-gray-100 rounded-full w-[25%]"></div>
+            <div className="h-2.5 bg-gray-100 rounded-full w-[50%]"></div>
+          </div>
+          <div className="flex items-center w-full space-x-2">
+            <div className="h-2.5 bg-gray-100 rounded-full w-[40%]"></div>
+            <div className="h-2.5 bg-gray-100 rounded-full w-[20%]"></div>
+            <div className="h-2.5 bg-gray-100 rounded-full w-[40%]"></div>
+          </div>
+          <div className="flex items-center w-full space-x-2">
+            <div className="h-2.5 bg-gray-100 rounded-full w-[33%]"></div>
+            <div className="h-2.5 bg-gray-100 rounded-full w-[50%]"></div>
+            <div className="h-2.5 bg-gray-100 rounded-full w-[17%]"></div>
+          </div>
+          <div className="flex items-center w-full space-x-2">
+            <div className="h-2.5 bg-gray-100 rounded-full w-[19%]"></div>
+            <div className="h-2.5 bg-gray-100 rounded-full w-[34%]"></div>
+            <div className="h-2.5 bg-gray-100 rounded-full w-[47%]"></div>
+          </div>
+          <div className="flex items-center w-full space-x-2">
+            <div className="h-2.5 bg-gray-100 rounded-full w-[25%]"></div>
+            <div className="h-2.5 bg-gray-100 rounded-full w-[25%]"></div>
+            <div className="h-2.5 bg-gray-100 rounded-full w-[50%]"></div>
+          </div>
+          <div className="flex items-center w-full space-x-2">
+            <div className="h-2.5 bg-gray-100 rounded-full w-[50%]"></div>
+            <div className="h-2.5 bg-gray-100 rounded-full w-[25%]"></div>
+            <div className="h-2.5 bg-gray-100 rounded-full w-[25%]"></div>
+          </div>
+          <span className="sr-only">Loading...</span>
+        </div>
+      );
+    }
+
+    return <div>{data.textResponse}</div>;
+  }, [data]);
+
   const kernels = useMemo(() => {
     if (!data) {
       return [...new Array(8)].map((_, i) => <KernelLoading key={i} />);
@@ -52,12 +96,18 @@ const Results: FC<ResultsProps> = ({ query }) => {
 
   return (
     <>
-      <h2 className="font-semibold text-2xl text-center">
+      <h2 className="font-bold text-3xl text-center">
         {query ? `Results for "${query}"` : "Your Granary"}
       </h2>
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-4 justify-items-center">
-        {kernels}
-      </div>
+      {query && <Section title="Summary" content={summary} />}
+      <Section
+        title={query ? "Relevant Kernels" : "Kernels"}
+        content={
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-4 justify-items-center">
+            {kernels}
+          </div>
+        }
+      />
     </>
   );
 };

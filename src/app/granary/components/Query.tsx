@@ -49,7 +49,7 @@ const Query: FC<QueryProps> = () => {
           type="search"
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          placeholder="Query Your Kernels..."
+          placeholder="Query Your Granary..."
           className="block w-full rounded-lg border border-gray-300 bg-gray-100 p-4 pl-10 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500"
         />
         <button

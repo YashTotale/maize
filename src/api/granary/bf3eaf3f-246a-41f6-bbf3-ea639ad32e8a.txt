@@ -1,0 +1,163 @@
+Silicon Valley is a region in Northern California that serves as a global center for high technology and innovation. Located in the southern part of the San Francisco Bay Area, it corresponds roughly to the geographical area of the Santa Clara Valley. San Jose is Silicon Valley's largest city, the third-largest in California, and the tenth-largest in the United States; other major Silicon Valley cities include Sunnyvale, Santa Clara, Redwood City, Mountain View, Palo Alto, Menlo Park, and Cupertino. The San Jose Metropolitan Area has the third-highest GDP per capita in the world (after Zürich, Switzerland and Oslo, Norway), according to the Brookings Institution, and, as of June 2021, has the highest percentage of homes valued at $1 million or more in the United States.
+
+Silicon Valley is home to many of the world's largest high-tech corporations, including the headquarters of more than 30 businesses in the Fortune 1000, and thousands of startup companies. Silicon Valley also accounts for one-third of all of the venture capital investment in the United States, which has helped it to become a leading hub and startup ecosystem for high-tech innovation, although the tech ecosystem is becoming growing more geographically dispersed. It was in Silicon Valley that the silicon-based integrated circuit, the microprocessor, and the microcomputer, among other technologies, were developed. As of 2021, the region employed about a half million information technology workers.
+
+As more high-tech companies were established across San Jose and the Santa Clara Valley, and then north towards the Bay Area's two other major cities, San Francisco and Oakland, the term "Silicon Valley" came to have two definitions: a narrower geographic one, referring to Santa Clara County and southeastern San Mateo County, and a metonymical definition referring to high-tech businesses in the entire Bay Area. The term Silicon Valley is often used as a synecdoche for the American high-technology economic sector. The name also became a global synonym for leading high-tech research and enterprises, and thus inspired similarly named locations, as well as research parks and technology centers with comparable structures all around the world. Many headquarters of tech companies in Silicon Valley have become hotspots for tourism.
+
+Etymology
+"Silicon" refers to the chemical element used in silicon-based transistors and integrated circuit chips, which is the focus of a large number of computer hardware and software innovators and manufacturers in the region. The popularization of the name is credited to Don Hoefler. The first known appearance in print was in his article "Silicon Valley U.S.A.", in the January 11, 1971, issue of the weekly trade newspaper Electronic News. In preparation for this report, during a lunch meeting with marketing people who were visiting the area, he heard them use this term. However, the term did not gain widespread use until the early 1980s, at the time of the introduction of the IBM PC and numerous related hardware and software products to the consumer market.
+
+The urbanized area is built upon an alluvial plain within a longitudinal valley formed by roughly parallel earthquake faults. The area between the faults subsided into a graben or dropped valley. Hoefler defined Silicon Valley as the urbanized parts of "the San Francisco Peninsula and Santa Clara Valley". Before the expansive growth of the tech industry, the region had been the largest fruit-producing and packing region in the world up through the 1960s, with 39 fruit canneries. The nickname it had been known as during that period was "the Valley of Heart’s Delight",
+
+History
+Silicon Valley was born through the intersection of several contributing factors including a skilled science research base housed in area universities, plentiful venture capital, and steady U.S. Department of Defense spending. Stanford University leadership was especially important in the valley's early development. Together these elements formed the basis of its growth and success.
+
+Early military origins
+The San Francisco Bay Area had long been a major site of United States Navy research and technology. In 1909, Charles Herrold started the first radio station in the United States with regularly scheduled programming in San Jose. Later that year, Stanford University graduate Cyril Elwell purchased the U.S. patents for Poulsen arc radio transmission technology and founded the Federal Telegraph Corporation (FTC) in Palo Alto. Over the next decade, the FTC created the world's first global radio communication system, and signed a contract with the Navy in 1912.
+
+In 1933, Air Base Sunnyvale, California, was commissioned by the United States Government for use as a Naval Air Station (NAS) to house the airship USS Macon in Hangar One. The station was renamed NAS Moffett Field, and between 1933 and 1947, U.S. Navy blimps were based there.
+
+A number of technology firms had set up shop in the area around Moffett Field to serve the Navy. When the Navy gave up its airship ambitions and moved most of its west coast operations to San Diego, the National Advisory Committee for Aeronautics (NACA, forerunner of NASA) took over portions of Moffett Field for aeronautics research. Many of the original companies stayed, while new ones moved in. The immediate area was soon filled with aerospace firms, such as Lockheed, which was the area's largest employer from the 1950s into 1980s.
+
+Role of Stanford University
+Stanford University, its affiliates, and graduates have played a major role in the development of the culture of collaboration among high-tech companies. A powerful sense of regional solidarity shaped the outlook of inventors and engineers in California; contrasting markedly from the insular and competitive environment of engineering firms on the East Coast of the United States. From the 1890s, Stanford University's leaders saw its mission as service to the (American) West and shaped the school accordingly. At the same time, the perceived exploitation of the West at the hands of eastern interests fueled booster-like attempts to build self-sufficient local industry. Thus regionalism helped align Stanford's interests with those of the area's high-tech firms.
+
+Frederick Terman, as Stanford University's dean of the school of engineering from 1946, encouraged faculty and graduates to start their own companies. In 1951 Terman spearheaded the formation of Stanford Industrial Park (now Stanford Research Park, an area surrounding Page Mill Road, south west of El Camino Real and extending beyond Foothill Expressway to Arastradero Road), where the university leased portions of its land to high-tech firms. Terman nurtured companies like Hewlett-Packard, Varian Associates, Eastman Kodak, General Electric, Lockheed Corporation, and other high-tech firms, until what would become Silicon Valley grew up around the Stanford University campus.
+
+In 1951, to address the financial demands of Stanford's growth requirements, and to provide local employment-opportunities for graduating students, Frederick Terman proposed leasing Stanford's lands for use as an office park named the Stanford Industrial Park (later Stanford Research Park). Terman invited only high-technology companies. The first tenant was Varian Associates, founded by Stanford alumni in the 1930s to build military-radar components. Terman also found venture capital for civilian-technology start-ups. Hewlett-Packard became one of the major success-stories. Founded in 1939 in Packard's garage by Stanford graduates Bill Hewlett and David Packard, Hewlett-Packard moved its offices into the Stanford Research Park shortly after 1953. In 1954 Stanford originated the Honors Cooperative Program to allow full-time employees of the companies to pursue graduate degrees from the university on a part-time basis. The initial companies signed five-year agreements in which they would pay double the tuition for each student in order to cover the costs. Hewlett-Packard has become the largest personal-computer manufacturer in the world, and transformed the home-printing market when it released the first thermal drop-on-demand ink-jet printer in 1984. Other early tenants included Eastman Kodak, General Electric, and Lockheed.
+
+Rise of Silicon
+In 1956, William Shockley, the co-inventor of the first working transistor (with John Bardeen and Walter Houser Brattain), moved from New Jersey to Mountain View, California, to start Shockley Semiconductor Laboratory to live closer to his ailing mother in Palo Alto. Shockley's work served as the basis for many electronic developments for decades. Both Frederick Terman and William Shockley are often called "the father of Silicon Valley". Unlike many other researchers who used germanium as the semiconductor material, Shockley believed that silicon was the better material for making transistors. Shockley intended to replace the current transistor with a new three-element design (today known as the Shockley diode), but the design was considerably more difficult to build than the "simple" transistor. In 1957, Shockley decided to end research on the silicon transistor. As a result of Shockley's abusive management style, eight engineers left the company to form Fairchild Semiconductor; Shockley referred to them as the "traitorous eight". Two of the original employees of Fairchild Semiconductor, Robert Noyce and Gordon Moore, would go on to found Intel.
+
+In 1957, Mohamed Atalla at Bell Labs developed the process of silicon surface passivation by thermal oxidation, which electrically stabilized silicon surfaces and reduced the concentration of electronic states at the surface. This enabled silicon to surpass the conductivity and performance of germanium, leading to silicon replacing germanium as the dominant semiconductor material, and paving the way for the mass-production of silicon semiconductor devices. This led to Atalla inventing the MOSFET (metal-oxide-silicon field-effect transistor), also known as the MOS transistor, with his colleague Dawon Kahng in 1959. It was the first truly compact transistor that could be miniaturised and mass-produced for a wide range of uses, and is credited with starting the silicon revolution.
+
+The MOSFET was initially overlooked and ignored by Bell Labs in favour of bipolar transistors, which led to Atalla resigning from Bell Labs and joining Hewlett-Packard in 1961. However, the MOSFET generated significant interest at RCA and Fairchild Semiconductor. In late 1960, Karl Zaininger and Charles Meuller fabricated a MOSFET at RCA, and Chih-Tang Sah built a MOS-controlled tetrode at Fairchild. MOS devices were later commercialized by General Microelectronics and Fairchild in 1964. The development of MOS technology became the focus of startup companies in California, such as Fairchild and Intel, fuelling the technological and economic growth of what would later be called Silicon Valley.
+
+Following the 1959 inventions of the monolithic integrated circuit (IC) chip by Robert Noyce at Fairchild, and the MOSFET (MOS transistor) by Mohamed Atalla and Dawon Kahng at Bell Labs, Atalla first proposed the concept of the MOS integrated circuit (MOS IC) chip in 1960, and then the first commercial MOS IC was introduced by General Microelectronics in 1964. The development of the MOS IC led to the invention of the microprocessor, incorporating the functions of a computer's central processing unit (CPU) on a single integrated circuit. The first single-chip microprocessor was the Intel 4004, designed and realized by Federico Faggin along with Ted Hoff, Masatoshi Shima and Stanley Mazor at Intel in 1971. In April 1974, Intel released the Intel 8080, a "computer on a chip", "the first truly usable microprocessor".
+
+Origins of the Internet
+On April 23, 1963, J. C. R. Licklider, the first director of the Information Processing Techniques Office (IPTO) at The Pentagon's ARPA issued an office memorandum addressed to Members and Affiliates of the Intergalactic Computer Network. It rescheduled a meeting in Palo Alto regarding his vision of a computer network, which he imagined as an electronic commons open to all, the main and essential medium of informational interaction for governments, institutions, corporations, and individuals. As head of IPTO from 1962 to 1964, "Licklider initiated three of the most important developments in information technology: the creation of computer science departments at several major universities, time-sharing, and networking." In 1969, the Stanford Research Institute (now SRI International), operated one of the four original nodes that comprised ARPANET, predecessor to the Internet.
+
+Emergence of venture capital
+By the early 1970s, there were many semiconductor companies in the area, computer firms using their devices, and programming and service companies serving both. Industrial space was plentiful and housing was still inexpensive. Growth during this era was fueled by the emergence of venture capital on Sand Hill Road, beginning with Kleiner Perkins and Sequoia Capital in 1972; the availability of venture capital exploded after the successful $1.3 billion IPO of Apple Computer in December 1980. Since the 1980s, Silicon Valley has been home to the largest concentration of venture capital firms in the world.
+
+In 1971, Don Hoefler traced the origins of Silicon Valley firms, including via investments from Fairchild's eight co-founders. The key investors in Kleiner Perkins and Sequoia Capital were from the same group, directly leading to Tech Crunch 2014 estimate of 92 public firms of 130 related listed firms then worth over US$2.1 trillion with over 2,000 firms traced back to them.
+
+Rise of computer culture
+The Homebrew Computer Club was an informal group of electronic enthusiasts and technically minded hobbyists who gathered to trade parts, circuits, and information pertaining to DIY construction of computing devices. It was started by Gordon French and Fred Moore who met at the Community Computer Center in Menlo Park. They both were interested in maintaining a regular, open forum for people to get together to work on making computers more accessible to everyone.
+
+The first meeting was held as of March 1975 at French's garage in Menlo Park, San Mateo County, California; which was on occasion of the arrival of the MITS Altair microcomputer, the first unit sent to the area for review by People's Computer Company. Steve Wozniak and Steve Jobs credit that first meeting with inspiring them to design the original Apple I and (successor) Apple II computers. As a result, the first preview of the Apple I was given at the Homebrew Computer Club. Subsequent meetings were held at an auditorium at the Stanford Linear Accelerator Center.
+
+Advent of software
+Although semiconductors are still a major component of the area's economy, Silicon Valley has been most famous in recent years for innovations in software and Internet services. Silicon Valley has significantly influenced computer operating systems, software, and user interfaces.
+
+Using money from NASA, the US Air Force, and ARPA, Douglas Engelbart invented the mouse and hypertext-based collaboration tools in the mid-1960s and 1970s while at Stanford Research Institute (now SRI International), first publicly demonstrated in 1968 in what is now known as The Mother of All Demos. Engelbart's Augmentation Research Center at SRI was also involved in launching the ARPANET (precursor to the Internet) and starting the Network Information Center (now InterNIC). Xerox hired some of Engelbart's best researchers beginning in the early 1970s. In turn, in the 1970s and 1980s, Xerox's Palo Alto Research Center (PARC) played a pivotal role in object-oriented programming, graphical user interfaces (GUIs), Ethernet, PostScript, and laser printers.
+
+While Xerox marketed equipment using its technologies, for the most part its technologies flourished elsewhere. The diaspora of Xerox inventions led directly to 3Com and Adobe Systems, and indirectly to Cisco, Apple Computer, and Microsoft. Apple's Macintosh GUI was largely a result of Steve Jobs' visit to PARC and the subsequent hiring of key personnel. Cisco's impetus stemmed from the need to route a variety of protocols over Stanford University's Ethernet campus network.
+
+Internet age
+Commercial use of the Internet became practical and grew slowly throughout the early 1990s. In 1995, commercial use of the Internet grew substantially and the initial wave of internet startups, Amazon.com, eBay, and the predecessor to Craigslist began operations.
+
+Silicon Valley is generally considered to have been the center of the dot-com bubble, which started in the mid-1990s and collapsed after the NASDAQ stock market began to decline dramatically in April 2000. During the bubble era, real estate prices reached unprecedented levels. For a brief time, Sand Hill Road was home to the most expensive commercial real estate in the world, and the booming economy resulted in severe traffic congestion.
+
+The PayPal Mafia is sometimes credited with inspiring the re-emergence of consumer-focused Internet companies after the dot-com bust of 2001. After the dot-com crash, Silicon Valley continues to maintain its status as one of the top research and development centers in the world. A 2006 The Wall Street Journal story found that 12 of the 20 most inventive towns in America were in California, and 10 of those were in Silicon Valley. San Jose led the list with 3,867 utility patents filed in 2005, and number two was Sunnyvale, at 1,881 utility patents. Silicon Valley is also home to a significant number of "Unicorn" ventures, referring to startup companies whose valuation has exceeded $1 billion dollars.
+
+Economy
+The San Francisco Bay Area has the largest concentration of high-tech companies in the United States, at 387,000 high-tech jobs, of which Silicon Valley accounts for 225,300 high-tech jobs. Silicon Valley has the highest concentration of high-tech workers of any metropolitan area, with 285.9 out of every 1,000 private-sector workers. Silicon Valley has the highest average high-tech salary in the United States at $144,800. Largely a result of the high technology sector, the San Jose-Sunnyvale-Santa Clara, CA Metropolitan Statistical Area has the most millionaires and the most billionaires in the United States per capita. Over time however, the venture capital ecosystem is growing more geographically decentralized.
+
+The region is the biggest high-tech manufacturing center in the United States. The unemployment rate of the region was 9.4% in January 2009 and has decreased to a record low of 2.7% as of August 2019. Silicon Valley received 41% of all U.S. venture investment in 2011, and 46% in 2012. More traditional industries also recognize the potential of high-tech development, and several car manufacturers have opened offices in Silicon Valley to capitalize on its entrepreneurial ecosystem.
+
+Manufacture of transistors is, or was, the core industry in Silicon Valley. The production workforce was for the most part composed of Asian and Latino immigrants who were paid low wages and worked in hazardous conditions due to the chemicals used in the manufacture of integrated circuits. Technical, engineering, design, and administrative staffs were in large part well compensated.
+
+Culture
+Events
+Apple Worldwide Developers Conference, San Jose
+Facebook F8, San Jose
+BayCon, Santa Clara
+Christmas in the Park, San Jose
+Cinequest Film Festival, multiple venues
+FanimeCon, San Jose
+LiveStrong Challenge bike race, San Jose
+Los Altos Art and Wine Festival, Los Altos
+Mountain View Art and Wine Festival, Mountain View
+Palo Alto Festival of the Arts, Palo Alto
+San Francisco International Asian American Film Festival, San Jose
+San Jose Jazz Festival, San Jose
+San Jose Holiday Parade, San Jose
+Silicon Valley Comic Con, San Jose
+Silicon Valley Pride, San Jose
+Stanford Jazz Festival, Stanford
+Graphic arts
+Allied Arts Guild, Menlo Park
+Pace Gallery, Palo Alto.
+Pacific Art League
+Movimiento de Arte y Cultura Latino Americana, San Jose
+Museums
+Computer History Museum
+Children's Discovery Museum of San Jose
+CuriOdyssey
+De Saisset Museum at Santa Clara University
+Hiller Aviation Museum
+History Park by History San José
+The HP Garage
+Intel Museum
+Iris & B. Gerald Cantor Center for Visual Arts at Stanford University
+Japanese American Museum of San Jose
+Los Altos History Museum
+Moffett Field Historical Society Museum,
+Museum of American Heritage
+Palo Alto Art Center
+Palo Alto Junior Museum and Zoo
+Portuguese Historical Museum
+Rosicrucian Egyptian Museum
+San Mateo County History Museum
+San Jose Museum of Art
+San Jose Museum of Quilts & Textiles
+Sunnyvale Heritage Park Museum
+The Tech Museum of Innovation
+Viet Museum
+Winchester Mystery House
+Performing arts
+American Beethoven Society
+American Musical Theatre of San Jose
+Ballet San Jose
+Bing Concert Hall
+California Youth Symphony
+Opera San José
+Symphony Silicon Valley
+San Jose Center for the Performing Arts
+Broadway San Jose
+San Jose Repertory Theatre
+San Jose Youth Symphony
+San Jose Improv
+SjDANCEco
+Broadway by the Bay
+TheatreWorks Theatre Company
+Media
+In 1980, Intelligent Machines Journal changed its name to InfoWorld, and, with offices in Palo Alto, began covering the emergence of the microcomputer industry in the valley.
+
+Local and national media cover Silicon Valley and its companies. CNN, The Wall Street Journal, and Bloomberg News operate Silicon Valley bureaus out of Palo Alto. Public broadcaster KQED (TV) and KQED-FM, as well as the Bay Area's local ABC station KGO-TV, operate bureaus in San Jose. KNTV, NBC's local Bay Area affiliate "NBC Bay Area", is located in San Jose. Produced from this location is the nationally distributed TV Show "Tech Now" as well as the CNBC Silicon Valley bureau. San Jose-based media serving Silicon Valley include the San Jose Mercury News daily and the Metro Silicon Valley weekly.
+
+Specialty media include El Observador and the San Jose / Silicon Valley Business Journal. Most of the Bay Area's other major TV stations, newspapers, and media operate in San Francisco or Oakland. Patch.com operates various web portals, providing local news, discussion and events for residents of Silicon Valley. Mountain View has a public nonprofit station, KMVT-15. KMVT-15's shows include Silicon Valley Education News (EdNews)-Edward Tico Producer.
+
+Cultural references
+Some appearances in media, in order by release date:
+
+A View to a Kill—1985 film from the James Bond series. Bond thwarts an elaborate ploy by the film's antagonist, Max Zorin, to destroy Silicon Valley.
+Triumph of the Nerds: The Rise of Accidental Empires – 1996 documentary
+Pirates of Silicon Valley—1999 film about the early days of Apple Computer and Microsoft (though the latter has never been based in Silicon Valley)
+Code Monkeys—2007 comedy series
+The Social Network—2010 film
+Startups Silicon Valley—reality TV series, debuted 2012 on Bravo
+Betas—TV series, debuted 2013 on Amazon Video
+Jobs—2013 film
+The Internship—2013 comedy film about working at Google
+Silicon Valley—2014 American sitcom from HBO
+Halt and Catch Fire—2014 TV series, the last two seasons are primarily set in Silicon Valley
+Steve Jobs—2015 film
+Watch Dogs 2—2016 video game developed by Ubisoft
+Valley of the Boom—2019 docudrama about the 1990s tech boom in Silicon Valley
+Devs—2020 TV miniseries
+Start-Up—2020 South Korean television series, when three artificial intelligence (A.I.) developers from South Korea are offered positions as engineers for the fictional company, 2STO which is located in Silicon Valley.
+The Dropout—2022 TV miniseries about the rise and fall of Theranos
+Super Pumped—2022 TV series about Travis Kalanick's time at Uber
