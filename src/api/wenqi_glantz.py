@@ -1,25 +1,26 @@
 import os
 import pinecone
+import tempfile
 from flask import Flask, request
 from llama_index import (
-    SimpleDirectoryReader,
     VectorStoreIndex,
     Document,
     StorageContext,
-    load_index_from_storage,
 )
 from llama_index.vector_stores import PineconeVectorStore
-
+import json
 
 PORT = 3001
 app = Flask(__name__)
 
 os.environ["STORAGE_DIR"] = "./storage"
 os.environ["GRANARY_DIR"] = "./granary"
+os.environ["TEMP_DIR"] = "./temp"
+os.environ["FILES_DB"] = "./db.json"
 os.environ["VECTOR_DIM"] = "1536"
 os.environ["PINECONE_API_KEY"] = "2c5c1d81-7373-4c22-bedd-eaca30b6109f"
 os.environ["PINECONE_ENVIRONMENT"] = "us-west1-gcp-free"
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 
 
 def init_pinecone():
@@ -39,18 +40,9 @@ def init_index():
     global pinecone_vector_store
 
     storage_context = StorageContext.from_defaults(
-        vector_store=pinecone_vector_store, persist_dir=os.environ["STORAGE_DIR"]
+        vector_store=pinecone_vector_store,
     )
-
-    if os.path.exists(os.environ["STORAGE_DIR"]):
-        index = load_index_from_storage(storage_context)  # type: ignore
-    else:
-        documents = SimpleDirectoryReader(os.environ["GRANARY_DIR"]).load_data()
-        index = VectorStoreIndex.from_documents(
-            documents, storage_context=storage_context
-        )
-        storage_context.persist(persist_dir=os.environ["STORAGE_DIR"])
-
+    index = VectorStoreIndex.from_documents([], storage_context=storage_context)
     return storage_context, index
 
 
@@ -62,6 +54,25 @@ def home():
     return "Home", 200
 
 
+@app.route("/api/query", methods=["GET"])
+def query_index():
+    query_text = request.args.get("text", None)
+
+    if query_text is None:
+        return "No text found, please include a ?text=SIUUU parameter in the URL", 400
+
+    response = index.as_query_engine().query(query_text)
+
+    return {
+        "success": True,
+        "message": "Success querying!",
+        "payload": {
+            "response": response.response,  # type: ignore
+            "source_nodes": response.source_nodes,
+        },
+    }, 200
+
+
 @app.route("/api/createKernel", methods=["POST"])
 def createKernel():
     global index, storage_context
@@ -70,88 +81,40 @@ def createKernel():
     if file is None:
         return {"success": False, "message": "File required"}, 400
 
-    file_path = os.path.join(os.environ["GRANARY_DIR"], file.filename)  # type: ignore
-    if os.path.exists(file_path):
-        return (
-            {
-                "success": False,
-                "message": "This file has already been added to your Granary. Please rename it and upload again.",
-            },
-            400,
-        )
+    # Temporarily save the file in the temp directory to read its contents
+    temp_file_path = os.path.join(os.environ["TEMP_DIR"], file.filename)  # type: ignore
+    file.save(temp_file_path)
+    temp_reader = open(temp_file_path, "r")
+    file_content = temp_reader.read()
 
-    file.save(file_path)
-    saved_file = open(file_path, "r")
-    file_content = saved_file.read()
-
+    # Create document and insert into index
     doc = Document(file_content)
     index.insert(doc)
-    index.storage_context.persist(persist_dir=os.environ["STORAGE_DIR"])
+    doc_id = doc.get_doc_id()
+
+    # Remove the temp file from the temp directory
+    os.remove(temp_file_path)
+
+    # open existing map of files
+    files_db_reader = open(os.environ["FILES_DB"], "r")
+    files_db = json.load(files_db_reader)
+
+    # Connect generated doc_id to user_specified filepath
+    files_db[doc_id] = {"filename": file.filename}
+
+    # Save the file in the actual directory
+    file_path = os.path.join(os.environ["GRANARY_DIR"], doc_id + ".txt")  # type: ignore
+    file.save(file_path)
+
+    # Write to the map of files
+    files_db_writer = open(os.environ["FILES_DB"], "w")
+    json.dump(files_db, files_db_writer)
 
     return {
         "success": True,
         "message": "Success creating kernel!",
-        "payload": {
-            "kernel_id": doc.doc_id,
-        },
+        "payload": {},
     }, 200
-
-
-# granary_dir = "./granary"  # directory to store files
-# storage_dir = "./storage"
-# html_file = "./example.html"
-
-# storage_context = StorageContext.from_defaults(persist_dir=storage_dir)
-# index: VectorStoreIndex = None  # type: ignore
-# kindex: KnowledgeGraphIndex = None
-
-
-# @app.route("/api/query", methods=["GET"])
-# def query_index():
-#     global index
-
-#     if index is None:
-#         return "No index found. Please upload documents to query."
-
-#     query_text = request.args.get("text", None)
-#     if query_text is None:
-#         return "No text found, please include a ?text=blah parameter in the URL", 400
-#     # query_engine = index.as_query_engine()
-
-#     # response = query_engine.query(query_text)
-
-#     print(query_text)
-
-#     # configure retriever
-#     retriever = VectorIndexRetriever(
-#         index=index,
-#         similarity_top_k=4,
-#     )
-
-#     # configure response synthesizer
-#     response_synthesizer = ResponseSynthesizer.from_args(
-#         node_postprocessors=[SimilarityPostprocessor(similarity_cutoff=0.7)]
-#     )
-
-#     # assemble query engine
-#     query_engine = RetrieverQueryEngine(
-#         retriever=retriever,
-#         response_synthesizer=response_synthesizer,
-#     )
-
-#     # query
-#     response = query_engine.query(query_text)
-
-#     print("SOURCES: " + response.get_formatted_sources())
-
-#     return {
-#         "success": True,
-#         "message": "Success querying!",
-#         "payload": {
-#             "response": response.response,  # type: ignore
-#             "response_nodes": response.source_nodes,
-#         },
-#     }, 200
 
 
 if __name__ == "__main__":

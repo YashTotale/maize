@@ -39,7 +39,7 @@ const KernelUpload: FC<KernelUploadProps> = () => {
           position: "after",
           uploadButton: {},
         }}
-        maxFiles={1}
+        maxFiles={10}
         maxFileSize={10 * 1024 * 1024}
         accept="text/plain"
         className="p-4"

@@ -12,6 +12,7 @@ from llama_index import (
     ResponseSynthesizer,
     EmptyIndex,
     KnowledgeGraphIndex,
+    TreeIndex,
 )
 
 
@@ -45,9 +46,10 @@ granary_dir = "./granary"  # directory to store files
 storage_dir = "./storage"
 html_file = "./example.html"
 
-storage_context = StorageContext.from_defaults(persist_dir=storage_dir)
+storage_context = StorageContext.from_defaults()
 index: VectorStoreIndex = None  # type: ignore
 kindex: KnowledgeGraphIndex = None
+tindex: TreeIndex = None
 
 
 @app.route("/api/sample-graph", methods=["GET"])
@@ -60,30 +62,54 @@ def init_knowledge_index():
     global kindex
     graph_store = SimpleGraphStore()
     graph_storage_context = StorageContext.from_defaults(graph_store=graph_store)
-    documents = SimpleDirectoryReader(granary_dir).load_data()
+    documents = SimpleDirectoryReader(granary_dir, filename_as_id=True).load_data()
     llm_predictor = LLMPredictor(llm=OpenAI(model_name="gpt-4"))
     graph_service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
     parser = node_parser.SimpleNodeParser()
     nodes = parser.get_nodes_from_documents(documents)
+    print("created document nodes")
 
     kindex = KnowledgeGraphIndex(
         nodes=nodes,
-        max_triplets_per_chunk=10,
+        max_triplets_per_chunk=5,
         storage_context=graph_storage_context,
         service_context=graph_service_context,
     )
-
-    # kindex = KnowledgeGraphIndex.build??(
-    #     documents,
-    #     max_triplets_per_chunk=10,
-    #     storage_context=graph_storage_context,
-    #     service_context=graph_service_context,
-    # )
+    graph_storage_context.persist(persist_dir=storage_dir)
 
     graph = kindex.get_networkx_graph()
     net = Network(notebook=False, cdn_resources="in_line", directed=True)
     net.from_nx(graph)
     return net.generate_html(), 200
+
+
+@app.route("/api/tree", methods=["GET"])
+def init_tree_index():
+    global tindex
+    # tree_store = SimpleGraphStore()
+    # tree_storage_context = StorageContext.from_defaults(graph_store=graph_store)
+    documents = SimpleDirectoryReader(granary_dir).load_data()
+    llm_predictor = LLMPredictor(llm=OpenAI(model_name="gpt-4"))
+    tree_service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
+    parser = node_parser.SimpleNodeParser()
+    nodes = parser.get_nodes_from_documents(documents)
+
+    tindex = TreeIndex(
+        nodes=nodes,
+        num_children=10,
+        # storage_context=graph_storage_context,
+        service_context=tree_service_context,
+        build_tree=True,
+    )
+
+    # return {
+    #     "success": True,
+    #     "message": "Success querying!",
+    #     "payload": {
+    #         "response": response.response,  # type: ignore
+    #         "response_nodes": response.source_nodes,
+    #     },
+    # }, 200
 
 
 @app.before_request
@@ -98,7 +124,7 @@ def before_request():
         index = VectorStoreIndex.from_documents(
             documents, storage_context=storage_context
         )
-        storage_context.persist(persist_dir=storage_dir)
+        storage_context.persist()
 
 
 # filename_fn = lambda filename: {"file_name": filename}
@@ -163,6 +189,7 @@ def createKernel():
 
     doc = Document(file_content)
     index.insert(doc)
+
     index.storage_context.persist(persist_dir=storage_dir)
 
     return {
