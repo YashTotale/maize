@@ -1,5 +1,5 @@
 // React Imports
-import { FC, Suspense } from "react";
+import { FC } from "react";
 import Query from "./components/Query";
 import Results from "./components/Results";
 

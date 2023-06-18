@@ -31,9 +31,10 @@ from io import BytesIO
 import matplotlib.pyplot as plt
 
 from flask import Flask
+import time
 
 
-PORT = 5000
+PORT = 5003
 app = Flask(__name__)
 
 # NOTE: for local testing only, do NOT deploy with your key hardcoded
@@ -46,7 +47,7 @@ granary_dir = "./granary"  # directory to store files
 storage_dir = "./storage"
 html_file = "./example.html"
 
-storage_context = StorageContext.from_defaults()
+storage_context = StorageContext.from_defaults(persist_dir=storage_dir)
 index: VectorStoreIndex = None  # type: ignore
 kindex: KnowledgeGraphIndex = None
 tindex: TreeIndex = None
@@ -61,25 +62,55 @@ def random():
 def init_knowledge_index():
     global kindex
     graph_store = SimpleGraphStore()
+
     graph_storage_context = StorageContext.from_defaults(graph_store=graph_store)
-    documents = SimpleDirectoryReader(granary_dir, filename_as_id=True).load_data()
+    text_chunks = [
+        granary_dir + "/berkeley.txt",
+        granary_dir + "/california.txt",
+        granary_dir + "/san-francisco.txt",
+    ]
+
+    documents = []
+    count = 1
+    for filename in text_chunks:
+        with open(filename, "r") as file:
+            documents.append(
+                Document(
+                    file.read(),
+                    doc_id=f"doc_id_{count}",
+                )
+            )
+        count += 1
+
+    # documents = SimpleDirectoryReader(granary_dir, filename_as_id=True).load_data()
     llm_predictor = LLMPredictor(llm=OpenAI(model_name="gpt-4"))
     graph_service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
     parser = node_parser.SimpleNodeParser()
     nodes = parser.get_nodes_from_documents(documents)
     print("created document nodes")
+    for node in nodes:
+        print(node.ref_doc_id)
+    print(len(nodes))
 
+    time_to_create_index = time.time()
     kindex = KnowledgeGraphIndex(
         nodes=nodes,
         max_triplets_per_chunk=5,
         storage_context=graph_storage_context,
         service_context=graph_service_context,
     )
-    graph_storage_context.persist(persist_dir=storage_dir)
+    time_to_create_index = time.time() - time_to_create_index
 
-    graph = kindex.get_networkx_graph()
+    graph_storage_context.persist(persist_dir=storage_dir)
+    time_to_create_graph = time.time()
+
+    graph = kindex.get_networkx_graph(text_chunks)
+    time_to_create_graph = time.time() - time_to_create_graph
     net = Network(notebook=False, cdn_resources="in_line", directed=True)
     net.from_nx(graph)
+    print(
+        f"TIMING SUMMARY\nIndex Creation: {time_to_create_index}s\nGraph building: {time_to_create_graph}s\n"
+    )
     return net.generate_html(), 200
 
 
@@ -93,14 +124,22 @@ def init_tree_index():
     tree_service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
     parser = node_parser.SimpleNodeParser()
     nodes = parser.get_nodes_from_documents(documents)
+    print(len(nodes))
 
+    time_to_create_index = time.time()
     tindex = TreeIndex(
         nodes=nodes,
-        num_children=10,
+        num_children=3,
         # storage_context=graph_storage_context,
         service_context=tree_service_context,
         build_tree=True,
     )
+    time_to_create_index = time.time() - time_to_create_index
+    print(tindex)
+
+    print(f"TIMING SUMMARY\nIndex Creation: {time_to_create_index}s\n")
+
+    return "successful", 200
 
     # return {
     #     "success": True,
@@ -115,7 +154,6 @@ def init_tree_index():
 @app.before_request
 def before_request():
     global index, storage_context
-    print(storage_context.index_store.index_structs())
 
     if os.path.exists(storage_dir):
         index = load_index_from_storage(storage_context)  # type: ignore

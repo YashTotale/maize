@@ -8,9 +8,18 @@ import KernelLoading from "./Kernel/Loading";
 import { createServerAPIRoute } from "@/lib/urls";
 import Section from "./Section";
 
-interface Doc {
+// API Imports
+import https from "https";
+
+interface Node {
+  start: string;
+  end: string;
+}
+
+export interface Doc {
   filename: string;
   text: string;
+  nodes?: Node[];
 }
 
 interface GranaryData {
@@ -20,7 +29,11 @@ interface GranaryData {
 
 const fetchGranaryData = async (query: string): Promise<GranaryData> => {
   const url = `/api/granary?query=${query}`;
-  const { data } = await axios.get(createServerAPIRoute(url));
+  const { data } = await axios
+    .create({
+      httpsAgent: new https.Agent({ keepAlive: true }),
+    })
+    .get(createServerAPIRoute(url));
   return data.payload;
 };
 
@@ -90,7 +103,7 @@ const Results: FC<ResultsProps> = ({ query }) => {
     }
 
     return Object.entries(data.relevantDocs).map(([id, doc]) => (
-      <Kernel key={id} id={id} {...doc} />
+      <Kernel key={id} {...doc} />
     ));
   }, [data]);
 

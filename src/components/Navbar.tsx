@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouse as Home,
   faBuildingWheat as Granary,
+  faCircleNodes as RelationMap,
 } from "@fortawesome/free-solid-svg-icons";
 
 // Next.js Imports
@@ -25,6 +26,14 @@ const Navbar: FC<NavbarProps> = () => {
           <Image src="/maize.png" alt="Maize Logo" width={100} height={48} />
         </div>
         <div className="navbar-end mr-4">
+          <Link
+            href="/api/relationMap"
+            target="_blank"
+            title="Relation Map"
+            className="btn-ghost btn-circle btn"
+          >
+            <FontAwesomeIcon icon={RelationMap} className="h-5 w-5" />
+          </Link>
           <Link
             href="/granary"
             title="Granary"

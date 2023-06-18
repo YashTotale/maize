@@ -12,11 +12,8 @@ from llama_index import (
     TreeIndex,
     LLMPredictor,
     load_index_from_storage,
-    load_graph_from_storage,
     node_parser,
     ServiceContext,
-    EmptyIndex,
-    SimpleDirectoryReader,
 )
 
 from llama_index.retrievers import VectorIndexRetriever
@@ -25,7 +22,7 @@ from llama_index.indices.postprocessor import SimilarityPostprocessor
 from llama_index.graph_stores import SimpleGraphStore
 from llama_index.indices.base import BaseIndex
 from langchain.llms import OpenAI
-from flask import request, render_template, send_file
+from flask import request
 
 from pyvis.network import Network
 
@@ -44,7 +41,6 @@ os.environ["FILES_DB"] = "./db.json"
 os.environ["VECTOR_DIM"] = "1536"
 os.environ["PINECONE_API_KEY"] = "b5c18ed3-b2fe-407b-a737-83e14e23fc63"
 os.environ["PINECONE_ENVIRONMENT"] = "asia-southeast1-gcp-free"
-os.environ["OPENAI_API_KEY"] = "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"
 os.environ["SEARCH_THRESHOLD"] = "0.76"
 KNOWLEDGE_STORAGE_DIR = "./kstorage"
 TREE_STORAGE_DIR = "./tstorage"
@@ -163,26 +159,14 @@ def create_relation_map():
     kindex = None
     graph_storage_context = None
     graph = None
-    if os.path.exists(KNOWLEDGE_STORAGE_DIR):
-        graph_store = SimpleGraphStore.from_persist_dir(KNOWLEDGE_STORAGE_DIR)
-
-        graph_storage_context = StorageContext.from_defaults(
-            persist_dir=KNOWLEDGE_STORAGE_DIR, graph_store=graph_store
-        )
-        kindex = load_index_from_storage(graph_storage_context)  # type: ignore
-        # graph = load_graph_from_storage(graph_storage_context, root_id=kindex.index_id)
-        print(kindex.index_struct.table.keys())
-        print(kindex.index_struct.node_mapping.keys())
-        print(type(kindex))
-    else:
-        graph_storage_context = StorageContext.from_defaults(graph_store=graph_store)
-        kindex = KnowledgeGraphIndex(
-            nodes=nodes,
-            max_triplets_per_chunk=5,
-            storage_context=graph_storage_context,
-            service_context=graph_service_context,
-        )
-        graph_storage_context.persist(persist_dir=KNOWLEDGE_STORAGE_DIR)
+    graph_store = SimpleGraphStore.from_persist_dir(KNOWLEDGE_STORAGE_DIR)
+    graph_storage_context = StorageContext.from_defaults(
+        persist_dir=KNOWLEDGE_STORAGE_DIR, graph_store=graph_store
+    )
+    kindex = load_index_from_storage(graph_storage_context)  # type: ignore
+    print(kindex.index_struct.table.keys())
+    print(kindex.index_struct.node_mapping.keys())
+    print(type(kindex))
 
     graph = kindex.get_networkx_graph(text_chunks)  # type: ignore
 
@@ -353,7 +337,7 @@ def query_index():
 
 @app.route("/api/createKernel", methods=["POST"])
 def createKernel():
-    global index, storage_context, kindex, parser
+    global index, parser
 
     file = request.files.get("file")
     if file is None:
@@ -363,7 +347,7 @@ def createKernel():
     temp_file_path = os.path.join(os.environ["TEMP_DIR"], file.filename)  # type: ignore
     file.save(temp_file_path)
     file.close()
-    
+
     temp_reader = open(temp_file_path, "r")
     file_content = temp_reader.read()
     temp_reader.close()
@@ -407,31 +391,34 @@ def createKernel():
     llm_predictor = LLMPredictor(llm=OpenAI(model_name="gpt-4"))
     graph_service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
 
-    kindex = None
+    new_kgraph = None
     graph_storage_context = None
     if os.path.exists(KNOWLEDGE_STORAGE_DIR):
         graph_store = SimpleGraphStore.from_persist_dir(KNOWLEDGE_STORAGE_DIR)
         graph_storage_context = StorageContext.from_defaults(
             persist_dir=KNOWLEDGE_STORAGE_DIR, graph_store=graph_store
         )
-        kindex = load_index_from_storage(graph_storage_context)  # type: ignore
+        new_kgraph = load_index_from_storage(graph_storage_context)  # type: ignore
         # print(kindex.index_struct.table.keys())
         # print(kindex.index_struct.node_mapping.keys())
         # print(type(kindex))
-        print(len(kindex.index_struct.node_mapping.keys()))
-        kindex.insert(doc_with_metadata)
-        print(len(kindex.index_struct.node_mapping.keys()))
+        # print(doc_with_metadata)
+        print(len(new_kgraph.index_struct.node_mapping.keys()))
+        new_kgraph.insert(doc_with_metadata)
+        print(len(new_kgraph.index_struct.node_mapping.keys()))
+
     else:
         graph_store = SimpleGraphStore()
         graph_storage_context = StorageContext.from_defaults(graph_store=graph_store)
-        kindex = KnowledgeGraphIndex.from_documents(
+        new_kgraph = KnowledgeGraphIndex.from_documents(
             [doc_with_metadata],
             max_triplets_per_chunk=5,
             storage_context=graph_storage_context,
             service_context=graph_service_context,
         )
 
-    graph_storage_context.persist(persist_dir=KNOWLEDGE_STORAGE_DIR)
+    time.sleep(3.5)
+    new_kgraph.storage_context.persist(persist_dir=KNOWLEDGE_STORAGE_DIR)
 
     return {
         "success": True,
