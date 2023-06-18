@@ -1,6 +1,6 @@
 // React Imports
 import { FC } from "react";
-import GrainUpload from "@/components/GrainUpload";
+import KernelUpload from "@/components/KernelUpload";
 
 interface HomeProps {}
 
@@ -12,7 +12,7 @@ const Home: FC<HomeProps> = () => {
           <h1 className="text-8xl font-bold">
             M<span className="text-green-300">ai</span>ze
           </h1>
-          <GrainUpload />
+          <KernelUpload />
         </div>
       </div>
     </div>
