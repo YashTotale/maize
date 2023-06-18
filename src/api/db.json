@@ -1,1 +1,11 @@
-{}
+{
+  "a2f4b777-b7fd-4d24-843f-0dd95f1adfb4": { "filename": "gold-rush.txt" },
+  "1fbac211-87ed-4d5a-a924-0c6880591f48": { "filename": "silicon-valley.txt" },
+  "a5edebbe-0970-42ee-a9bd-9b0f82983fdb": { "filename": "california.txt" },
+  "4e0a15da-f684-4b39-a47a-962de80c278a": { "filename": "apple.txt" },
+  "f560f01a-dda2-4a80-bfe3-e183e4a3ac79": { "filename": "berkeley.txt" },
+  "f15abbc6-6dfa-4d68-9819-71acfbddf332": { "filename": "san-francisco.txt" },
+  "9abf4e29-da75-4d69-afe7-8d26140279e6": {
+    "filename": "golden-gate-bridge.txt"
+  }
+}
