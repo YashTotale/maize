@@ -21,6 +21,7 @@ os.environ["VECTOR_DIM"] = "1536"
 os.environ["PINECONE_API_KEY"] = "2c5c1d81-7373-4c22-bedd-eaca30b6109f"
 os.environ["PINECONE_ENVIRONMENT"] = "us-west1-gcp-free"
 os.environ["OPENAI_API_KEY"] = "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"
+os.environ["SEARCH_THRESHOLD"] = "0.76"
 
 
 def init_pinecone():
@@ -54,23 +55,76 @@ def home():
     return "Home", 200
 
 
-@app.route("/api/query", methods=["GET"])
+# Given a doc_id, returns the text of the document
+def get_granary_text(doc_id):
+    doc_path = os.path.join(os.environ["GRANARY_DIR"], doc_id + ".txt")
+    granary_reader = open(doc_path, "r")
+    file_content = granary_reader.read()
+
+    return file_content
+
+
+# Given a doc_id, get the corresopnding name using the db.json file
+def query_files_db(doc_id):
+    files_db_reader = open(os.environ["FILES_DB"], "r")
+    files_db = json.load(files_db_reader)
+
+    return files_db[doc_id]
+
+
+@app.route("/api/granary", methods=["GET"])
 def query_index():
-    query_text = request.args.get("text", None)
+    query_text = request.args.get("query", None)
 
+    # If no query, then get all documents.
     if query_text is None:
-        return "No text found, please include a ?text=SIUUU parameter in the URL", 400
+        # Get files database
+        files_db_reader = open(os.environ["FILES_DB"], "r")
+        files_db = json.load(files_db_reader)
 
-    response = index.as_query_engine().query(query_text)
+        # Create version of files that has full text appended as an attribute for each file
+        for doc_id in files_db:
+            #' Read full text and assign to 'text' attribute'
+            files_db[doc_id]["text"] = get_granary_text(doc_id)
 
-    return {
-        "success": True,
-        "message": "Success querying!",
-        "payload": {
-            "response": response.response,  # type: ignore
-            "source_nodes": response.source_nodes,
-        },
-    }, 200
+        return {
+            "success": True,
+            "message": "Success querying!",
+            "payload": {"relevantDocs": files_db},
+        }, 200
+
+    else:
+        # Define empty response
+        relevant_docs = {}
+
+        # If query text given, provide the query response
+        query_res = index.as_query_engine().query(query_text)
+
+        # Go through each document that the response used as a source
+        nodes = query_res.source_nodes
+
+        for obj in nodes:
+            print(obj)
+            node = obj.node
+            # If node is relevant enough...
+            if obj.score >= float(os.environ["SEARCH_THRESHOLD"]):  # type: ignore
+                # Read text of the node
+                text = get_granary_text(node.ref_doc_id)
+
+                # Get filename corresponding to doc_id
+                filename = query_files_db(node.ref_doc_id)
+
+                # Add object to relevantDocs object with its filename and full text
+                relevant_docs[node.doc_id] = {"filename": filename, "text": text}
+
+        return {
+            "success": True,
+            "message": "Success querying!",
+            "payload": {
+                "relevantDocs": relevant_docs,  # type: ignore
+                "queryResponse": query_res,
+            },
+        }, 200
 
 
 @app.route("/api/createKernel", methods=["POST"])
@@ -104,7 +158,8 @@ def createKernel():
 
     # Save the file in the actual directory
     file_path = os.path.join(os.environ["GRANARY_DIR"], doc_id + ".txt")  # type: ignore
-    file.save(file_path)
+    file_writer = open(file_path, "w")
+    file_writer.write(file_content)
 
     # Write to the map of files
     files_db_writer = open(os.environ["FILES_DB"], "w")

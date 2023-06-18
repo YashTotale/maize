@@ -17,7 +17,7 @@ const Navbar: FC<NavbarProps> = () => {
     <header>
       <nav className="navbar bg-base-100 shadow-lg">
         <div className="navbar-start ml-4">
-          <Link href="/" title="Home" className="btn btn-ghost btn-circle">
+          <Link href="/" title="Home" className="btn-ghost btn-circle btn">
             <FontAwesomeIcon icon={Home} className="h-5 w-5" />
           </Link>
         </div>
@@ -28,7 +28,7 @@ const Navbar: FC<NavbarProps> = () => {
           <Link
             href="/granary"
             title="Granary"
-            className="btn btn-ghost btn-circle"
+            className="btn-ghost btn-circle btn"
           >
             <FontAwesomeIcon icon={Granary} className="h-5 w-5" />
           </Link>
