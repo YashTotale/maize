@@ -1,8 +1,7 @@
 // React Imports
 import { FC, Suspense } from "react";
 import Query from "./components/Query";
-import Kernels from "./components/Responses";
-import KernelsLoading from "./components/Responses/Loading";
+import Results from "./components/Results";
 
 export const metadata = {
   title: "Granary | Maize",
@@ -15,11 +14,9 @@ const Granary: FC<GranaryProps> = ({ searchParams }) => {
   const query = searchParams.query ? searchParams.query.toString() : "";
 
   return (
-    <div className="flex flex-col gap-8">
-      <Query currentValue={query} />
-      <Suspense fallback={<KernelsLoading />}>
-        <Kernels query={query} />
-      </Suspense>
+    <div className="flex flex-col gap-6">
+      <Query />
+      <Results query={query} />
     </div>
   );
 };
