@@ -146,8 +146,6 @@ def create_relation_map():
     documents = generate_docs_from_files(text_chunks)
 
     # documents = SimpleDirectoryReader(granary_dir, filename_as_id=True).load_data()
-    llm_predictor = LLMPredictor(llm=OpenAI(model_name="gpt-4"))
-    graph_service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
     nodes = parser.get_nodes_from_documents(documents)
     print("created document nodes")
     for node in nodes:
@@ -394,9 +392,9 @@ def createKernel():
     new_kgraph = None
     graph_storage_context = None
     if os.path.exists(KNOWLEDGE_STORAGE_DIR):
-        graph_store = SimpleGraphStore.from_persist_dir(KNOWLEDGE_STORAGE_DIR)
+        # graph_store = SimpleGraphStore.from_persist_dir(KNOWLEDGE_STORAGE_DIR)
         graph_storage_context = StorageContext.from_defaults(
-            persist_dir=KNOWLEDGE_STORAGE_DIR, graph_store=graph_store
+            persist_dir=KNOWLEDGE_STORAGE_DIR
         )
         new_kgraph = load_index_from_storage(graph_storage_context)  # type: ignore
         # print(kindex.index_struct.table.keys())
@@ -408,8 +406,7 @@ def createKernel():
         print(len(new_kgraph.index_struct.node_mapping.keys()))
 
     else:
-        graph_store = SimpleGraphStore()
-        graph_storage_context = StorageContext.from_defaults(graph_store=graph_store)
+        graph_storage_context = StorageContext.from_defaults()
         new_kgraph = KnowledgeGraphIndex.from_documents(
             [doc_with_metadata],
             max_triplets_per_chunk=5,
@@ -417,7 +414,6 @@ def createKernel():
             service_context=graph_service_context,
         )
 
-    time.sleep(3.5)
     new_kgraph.storage_context.persist(persist_dir=KNOWLEDGE_STORAGE_DIR)
 
     return {
