@@ -2,16 +2,17 @@
 import { FC } from "react";
 import KernelUpload from "@/components/KernelUpload";
 
+// Next.js Imports
+import Image from "next/image";
+
 interface HomeProps {}
 
 const Home: FC<HomeProps> = () => {
   return (
-    <div className="hero min-h-screen bg-base-200">
+    <div className="hero">
       <div className="hero-content text-center">
         <div className="max-w-md">
-          <h1 className="text-8xl font-bold">
-            M<span className="text-green-300">ai</span>ze
-          </h1>
+          <Image src="/maize.png" alt="Maize Logo" width={400} height={150} />
           <KernelUpload />
         </div>
       </div>

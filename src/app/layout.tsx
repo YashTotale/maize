@@ -1,4 +1,6 @@
 // React Imports
+import { FC, PropsWithChildren } from "react";
+import Navbar from "@/components/Navbar";
 import "./globals.css";
 
 // Next.js Imports
@@ -11,14 +13,17 @@ export const metadata = {
   description: "TBD",
 };
 
-function RootLayout({ children }: { children: React.ReactNode }) {
+interface RootLayoutProps extends PropsWithChildren {}
+
+const RootLayout: FC<RootLayoutProps> = ({ children }) => {
   return (
     <html lang="en" data-theme="retro">
       <body className={inter.className}>
-        <main>{children}</main>
+        <Navbar />
+        <main className="m-8">{children}</main>
       </body>
     </html>
   );
-}
+};
 
 export default RootLayout;
